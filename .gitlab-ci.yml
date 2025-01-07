@@ -1,0 +1,24 @@
+# 选择你要使用的 docker 镜像
+image: node:lts-buster
+
+pages:
+  # 每当 push 到 main 分支时触发部署
+  only:
+    - main
+
+  # 缓存 node_modules
+  cache:
+    key:
+      files:
+        - package.json
+    paths:
+      - node_modules/
+
+  # 安装依赖并运行构建脚本
+  script:
+    - npm install
+    - npm run docs:build -- --dest public
+
+  artifacts:
+    paths:
+      - public
